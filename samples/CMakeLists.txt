@@ -1,0 +1,6 @@
+file(GLOB SAMPLES LIST_DIRECTORIES true *)
+foreach(SAMPLE ${SAMPLES})
+  if(IS_DIRECTORY ${SAMPLE})
+    add_subdirectory(${SAMPLE})
+  endif()
+endforeach()
