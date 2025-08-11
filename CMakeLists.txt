@@ -18,5 +18,9 @@ set(GLFW_BUILD_EXAMPLES OFF)
 add_subdirectory(third_party/glfw)
 add_subdirectory(third_party/glm)
 
+add_library(stb INTERFACE)
+target_include_directories(stb
+    INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/third_party/stb)
+
 add_subdirectory(common)
 add_subdirectory(samples)
