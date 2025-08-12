@@ -15,6 +15,12 @@ function(setup_project_directories)
 
     set(FINAL_OUTPUT_PATH "${CMAKE_BINARY_DIR}/${OUTPUT_SUBDIR}")
 
+    execute_process(
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${CMAKE_SOURCE_DIR}/assets"
+        "${FINAL_OUTPUT_PATH}/assets"
+    )
+
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${FINAL_OUTPUT_PATH}" CACHE PATH "Runtime output directory")
     set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${FINAL_OUTPUT_PATH}" CACHE PATH "Library output directory")
     set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${FINAL_OUTPUT_PATH}" CACHE PATH "Archive output directory")
@@ -28,16 +34,4 @@ function(setup_project_directories)
 
     message(STATUS "Final products will be placed in: ${CMAKE_BINARY_DIR}/${OUTPUT_SUBDIR}/")
     message(STATUS "Intermediate files will be placed in: ${CMAKE_BINARY_DIR}/mid/${OUTPUT_SUBDIR}/")
-endfunction()
-
-function(copy_resources_to_target TARGET_NAME)
-    set(RESOURCE_DIR "${CMAKE_SOURCE_DIR}/res")
-    if(EXISTS ${RESOURCE_DIR})
-        add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different
-            "${RESOURCE_DIR}"
-            "$<TARGET_FILE_DIR:${TARGET_NAME}>/res"
-            COMMENT "Copying resources to output directory..."
-        )
-    endif()
 endfunction()
